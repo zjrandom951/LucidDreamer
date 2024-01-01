@@ -137,7 +137,7 @@ with gr.Blocks(css=css) as demo:
             )
             gen_camerapath = gr.Radio(
                 label='Camera trajectory for generation (STEP 1)',
-                choices=['lookaround', 'lookdown', 'rotate360'],
+                choices=['lookaround', 'lookdown', 'rotate360', 'sphere'],
                 value='lookaround',
             )
             

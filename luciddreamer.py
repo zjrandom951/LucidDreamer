@@ -188,6 +188,7 @@ class LucidDreamer:
             self.scene = Scene(self.traindata, self.gaussians, self.opt)        
             self.training()
             self.timestamp = datetime.datetime.now().strftime('%y%m%d_%H%M%S')
+            self.save_dir = os.path.join(self.root, self.timestamp)
             if not os.path.exists(self.save_dir):
                 os.makedirs(self.save_dir)
             outfile = self.save_ply(os.path.join(self.save_dir, 'gsplat.ply'))
@@ -348,9 +349,9 @@ class LucidDreamer:
             else: # w <= h
                 image_curr = rgb_cond.crop((0, int(h_in/2-w_in/2), w_in, int(h_in/2+w_in/2))).resize((self.cam.W, self.cam.H))
 
-        render_poses = get_pcdGenPoses(pcdgenpath)
         depth_curr = self.d(image_curr)
         center_depth = np.mean(depth_curr[h_in//2-10:h_in//2+10, w_in//2-10:w_in//2+10])
+        render_poses = get_pcdGenPoses(pcdgenpath, argdict={'center_depth': center_depth})
 
         ###########################################################################################################################
         # Iterative scene generation
